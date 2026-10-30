@@ -1,0 +1,10 @@
+[
+  {"order_id": "TK-10231", "phone": "081234561111", "status": "delivered", "items": ["VoltGo P10 Power Bank 10000mAh x1"], "courier": "JNE", "tracking_no": "JNE0012345678", "estimated_delivery": "2026-10-08", "payment": "COD"},
+  {"order_id": "TK-10232", "phone": "081298762222", "status": "shipped", "items": ["USB-C to USB-C cable 1m x2", "20W wall charger x1"], "courier": "J&T Express", "tracking_no": "JT7788990011", "estimated_delivery": "2026-10-17", "payment": "GoPay"},
+  {"order_id": "TK-10233", "phone": "085711113333", "status": "processing", "items": ["Wireless earphones TW-5 x1"], "courier": null, "tracking_no": null, "estimated_delivery": "2026-10-19", "payment": "BCA virtual account"},
+  {"order_id": "TK-10234", "phone": "087855554444", "status": "awaiting_payment", "items": ["VoltGo P20 Power Bank 20000mAh x1"], "courier": null, "tracking_no": null, "estimated_delivery": null, "payment": "QRIS (unpaid)"},
+  {"order_id": "TK-10235", "phone": "081377775555", "status": "cancelled", "items": ["USB-C cable 2m x1"], "courier": null, "tracking_no": null, "estimated_delivery": null, "payment": "OVO (refunded)"},
+  {"order_id": "TK-10236", "phone": "089612346666", "status": "shipped", "items": ["VoltGo P10 Power Bank 10000mAh x2"], "courier": "SiCepat", "tracking_no": "SCP000456789", "estimated_delivery": "2026-10-16", "payment": "DANA"},
+  {"order_id": "TK-10237", "phone": "081955557777", "status": "delivered", "items": ["Wireless earphones TW-5 x1", "USB-C cable 1m x1"], "courier": "JNE", "tracking_no": "JNE0098765432", "estimated_delivery": "2026-10-10", "payment": "COD"},
+  {"order_id": "TK-10238", "phone": "082122228888", "status": "delivered", "items": ["30W wall charger x1"], "courier": "J&T Express", "tracking_no": "JT1122334455", "estimated_delivery": "2026-10-12", "payment": "Mandiri virtual account"}
+]

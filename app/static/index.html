@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TokoKita Support</title>
+<style>
+  :root { --brand: #e8590c; --bg: #f6f6f4; --bubble: #fff; --me: #ffe8d9; --text: #222; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+  header { background: var(--brand); color: #fff; padding: 14px 16px; font-weight: 600; }
+  header small { display: block; font-weight: 400; opacity: .85; }
+  #log { max-width: 720px; margin: 0 auto; padding: 16px; height: calc(100vh - 140px); overflow-y: auto; }
+  .msg { max-width: 85%; padding: 10px 12px; border-radius: 12px; margin: 8px 0; white-space: pre-wrap; line-height: 1.45; }
+  .bot { background: var(--bubble); border: 1px solid #e5e5e5; }
+  .me { background: var(--me); margin-left: auto; }
+  .tools { font-size: 12px; color: #888; margin: -4px 0 8px 4px; }
+  form { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #ddd; padding: 12px; }
+  .row { max-width: 720px; margin: 0 auto; display: flex; gap: 8px; }
+  input { flex: 1; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
+  button { padding: 10px 18px; background: var(--brand); color: #fff; border: 0; border-radius: 8px; font-size: 16px; }
+  button:disabled { opacity: .5; }
+</style>
+</head>
+<body>
+<header>TokoKita Customer Service<small>Ask in English or Bahasa Indonesia</small></header>
+<div id="log"><div class="msg bot">Halo Kak! Saya Sari dari TokoKita. Ada yang bisa saya bantu? / Hi! How can I help you today?</div></div>
+<form id="f">
+  <div class="row">
+    <input id="q" autocomplete="off" placeholder="Type your message..." maxlength="1000" required>
+    <button id="b">Send</button>
+  </div>
+</form>
+<script>
+  let sessionId = null;
+  const log = document.getElementById("log"), q = document.getElementById("q"), b = document.getElementById("b");
+  function add(text, cls) {
+    const d = document.createElement("div"); d.className = "msg " + cls; d.textContent = text;
+    log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+  }
+  document.getElementById("f").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const text = q.value.trim(); if (!text) return;
+    add(text, "me"); q.value = ""; b.disabled = true;
+    const wait = add("...", "bot");
+    try {
+      const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, session_id: sessionId }) });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.detail || r.statusText);
+      sessionId = data.session_id; wait.textContent = data.reply;
+      if (data.tools_used.length) {
+        const t = document.createElement("div"); t.className = "tools"; t.textContent = "tools: " + data.tools_used.join(", ");
+        wait.after(t);
+      }
+    } catch (err) { wait.textContent = "Error: " + err.message; }
+    b.disabled = false; q.focus();
+  });
+</script>
+</body>
+</html>

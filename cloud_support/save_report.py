@@ -8,6 +8,8 @@ from pathlib import Path
 ap = argparse.ArgumentParser()
 ap.add_argument('label')
 ap.add_argument('--expected-url')
+ap.add_argument('--outdir', default='交付物',
+                help='Output directory for the labeled report (default: 交付物).')
 args = ap.parse_args()
 if Path(args.label).name != args.label:
     raise SystemExit('Label must be a filename, not a path.')
@@ -19,8 +21,9 @@ latest = max(reports, key=lambda p: p.stat().st_mtime_ns)
 data = json.loads(latest.read_text(encoding='utf-8'))
 if args.expected_url and data['url'] != args.expected_url.rstrip('/'):
     raise SystemExit('Latest report belongs to another endpoint. Do not mislabel it.')
-Path('交付物').mkdir(exist_ok=True)
-dest = Path('交付物') / (args.label + '.json')
+out = Path(args.outdir)
+out.mkdir(parents=True, exist_ok=True)
+dest = out / (args.label + '.json')
 if dest.exists():
     raise SystemExit('Label already exists. Use a new label to preserve the earlier evidence.')
 shutil.copy2(latest, dest)
